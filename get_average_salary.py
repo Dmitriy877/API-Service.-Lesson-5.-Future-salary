@@ -65,11 +65,11 @@ def get_head_hunter_vacancy(languages):
             average_salary = int((sum(expected_salaries)/len(expected_salaries)))
         else:
             average_salary = "Недостаточно вакансий для расчета"
-        salary_head_hunter.update({language: {
+        salary_head_hunter[language] = {
             "vacancy_found": vacancy_found,
             "processed_salary": processed_salary,
             "average_salary": average_salary,
-            }})
+            }
     return salary_head_hunter
 
 
@@ -112,11 +112,11 @@ def get_super_job_vacancy_info(api_key, languages):
             average_salary = int((sum(expected_salaries)/len(expected_salaries)))
         else:
             average_salary = "Недостаточно вакансий для расчета"
-        salary_information_super_job.update({language: {
+        salary_information_super_job[language] = {
             "vacancy_found": vacancies_found,
             "processed_salary": processed_salary,
             "average_salary": average_salary,
-            }})
+            }
     return salary_information_super_job
 
 
