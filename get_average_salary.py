@@ -137,19 +137,7 @@ def make_table_salary_statisctis(it_spheres_vacancy, title):
                            ])
     table_instance = AsciiTable(table_data, title)
     table_instance.justify_columns[2] = 'right'
-    print(table_instance.table)
-    print()
-
-
-def show_table_salary_statisctis(api_key, languages):
-    title_head_hunter = "HeadHunter Moscow"
-    title_super_job = "SuperJob Moscow"
-    head_hunter_it_spheres = get_head_hunter_vacancy(languages)
-    super_job_it_spheres = get_super_job_vacancy_info(api_key,
-                                                      languages)
-    make_table_salary_statisctis(head_hunter_it_spheres,
-                                 title_head_hunter)
-    make_table_salary_statisctis(super_job_it_spheres, title_super_job)
+    return table_instance.table
     
 
 def main():
@@ -169,8 +157,8 @@ def main():
     head_hunter_vacancy_info = get_head_hunter_vacancy(languages)
     super_job_vacancy_info = get_super_job_vacancy_info(super_job_api_key,
                                                         languages)
-    make_table_salary_statisctis(head_hunter_vacancy_info, title_head_hunter)
-    make_table_salary_statisctis(super_job_vacancy_info, title_super_job)
+    print(make_table_salary_statisctis(head_hunter_vacancy_info, title_head_hunter))
+    print(make_table_salary_statisctis(super_job_vacancy_info, title_super_job))
 
 
 if __name__ == "__main__":
