@@ -30,7 +30,7 @@ def predict_rub_salary_super_job(vacancy):
 
 def get_head_hunter_vacancy(languages):
     it_vacancies = []
-    only_salary = []
+    expected_salaries = []
     salary_head_hunter = {}
     moscow_id = 1
 
@@ -57,11 +57,14 @@ def get_head_hunter_vacancy(languages):
             pages = response.json()["pages"]
             sleep(1)
         for vacancy in it_vacancies:
-            only_salary.append(predict_rub_salary_head_hunter(vacancy))
+            expected_salaries.append(predict_rub_salary_head_hunter(vacancy))
 
         vacancy_found = page_answer["found"]
-        processed_salary = len(only_salary)
-        average_salary = int((sum(only_salary)/len(only_salary)))
+        processed_salary = len(expected_salaries)
+        if processed_salary > 0:
+            average_salary = int((sum(expected_salaries)/len(expected_salaries)))
+        else:
+            average_salary = "Недостаточно вакансий для расчета"
         salary_head_hunter.update({language: {
             "vacancy_found": vacancy_found,
             "processed_salary": processed_salary,
@@ -72,7 +75,7 @@ def get_head_hunter_vacancy(languages):
 
 def get_super_job_vacancy_info(api_key, languages):
     super_job_vacancy = []
-    average_salaries = []
+    expected_salaries = []
     salary_information_super_job = {}
 
     for language in languages:
@@ -101,14 +104,17 @@ def get_super_job_vacancy_info(api_key, languages):
                 break
 
         for vacancy in super_job_vacancy:
-            average_salaries.append(predict_rub_salary_super_job(vacancy))
+            expected_salaries.append(predict_rub_salary_super_job(vacancy))
 
         vacancies_found = page_answer["total"]
-        vacancies_processed = len(average_salaries)
-        average_salary = int((sum(average_salaries)/len(average_salaries)))
+        processed_salary = len(expected_salaries)
+        if processed_salary > 0:
+            average_salary = int((sum(expected_salaries)/len(expected_salaries)))
+        else:
+            average_salary = "Недостаточно вакансий для расчета"
         salary_information_super_job.update({language: {
             "vacancy_found": vacancies_found,
-            "processed_salary": vacancies_processed,
+            "processed_salary": processed_salary,
             "average_salary": average_salary,
             }})
     return salary_information_super_job
