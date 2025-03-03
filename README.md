@@ -32,11 +32,15 @@ pip install -r requerements.txt
 * Откройте консоль
 * Перейдите в консоли в папку с скриптом , например:
 
-```cd C:\Users\Dmitr\Documents\GitHub\API-Service.-Lesson-5.-Future-salary```
+```
+cd C:\Users\Dmitr\Documents\GitHub\API-Service.-Lesson-5.-Future-salary
+```
 
 * введите в консоль команду запуска скрипта:
 
-```python get_average_salary.py ```
+```
+python get_average_salary.py 
+```
 
 * Произойдет выведение на экран 2 таблиц со средними зарплатами по вакансиям специалистов различных языков в зависимости от сайта вакансий (Head Hunter и Super Job)
 
