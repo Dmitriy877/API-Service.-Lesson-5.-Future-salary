@@ -139,7 +139,7 @@ def get_super_job_vacancy_info(api_key, languages):
     return salary_information_super_job
 
 
-def make_table_salary_statisctis(vacancy_info, title):
+def make_table_salary_statisctis(it_spheres_vacancy, title):
     table_data = [
           [
            "Язык программирования",
@@ -148,11 +148,11 @@ def make_table_salary_statisctis(vacancy_info, title):
            "Средняя зарплата"
           ]
     ]
-    for language in vacancy_info:
-        table_data.append([language,
-                           vacancy_info[language]["vacancy_found"],
-                           vacancy_info[language]["processed_salary"],
-                           vacancy_info[language]["average_salary"]
+    for it_sphere in it_spheres_vacancy:
+        table_data.append([it_sphere,
+                           it_spheres_vacancy[it_sphere]["vacancy_found"],
+                           it_spheres_vacancy[it_sphere]["processed_salary"],
+                           it_spheres_vacancy[it_sphere]["average_salary"]
                            ])
     table_instance = AsciiTable(table_data, title)
     table_instance.justify_columns[2] = 'right'
@@ -163,10 +163,12 @@ def make_table_salary_statisctis(vacancy_info, title):
 def show_table_salary_statisctis(api_key, languages):
     title_head_hunter = "HeadHunter Moscow"
     title_super_job = "SuperJob Moscow"
-    head_hunter_vacancy_info = get_head_hunter_vacancy_info(languages)
-    super_job_vacancy_info = get_super_job_vacancy_info(api_key, languages)
-    make_table_salary_statisctis(head_hunter_vacancy_info, title_head_hunter)
-    make_table_salary_statisctis(super_job_vacancy_info, title_super_job)
+    head_hunter_it_spheres = get_head_hunter_vacancy_info(languages)
+    super_job_it_spheres = get_super_job_vacancy_info(api_key,
+                                                      languages)
+    make_table_salary_statisctis(head_hunter_it_spheres,
+                                 title_head_hunter)
+    make_table_salary_statisctis(super_job_it_spheres, title_super_job)
     
 
 def main():
@@ -181,7 +183,13 @@ def main():
         "Java",
         "JavaScript"
         ]
-    show_table_salary_statisctis(super_job_api_key, languages)
+    title_head_hunter = "HeadHunter Moscow"
+    title_super_job = "SuperJob Moscow"
+    head_hunter_vacancy_info = get_head_hunter_vacancy_info(languages)
+    super_job_vacancy_info = get_super_job_vacancy_info(super_job_api_key,
+                                                        languages)
+    make_table_salary_statisctis(head_hunter_vacancy_info, title_head_hunter)
+    make_table_salary_statisctis(super_job_vacancy_info, title_super_job)
 
 
 if __name__ == "__main__":
