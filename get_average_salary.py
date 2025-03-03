@@ -6,9 +6,10 @@ from time import sleep
 
 
 def get_it_vacancy_found_head_hunter(language):
+    moscow_id = 1
     payload = {
         "text": language,
-        "area": 1,
+        "area": moscow_id,
         "premium": True,
         }
     url = "https://api.hh.ru/vacancies"
@@ -60,6 +61,7 @@ def get_head_hunter_vacancy(languages):
     it_vacancies = []
     only_salary = []
     salary_head_hunter = {}
+    moscow_id = 1
 
     for language in languages:
         sleep(1)
@@ -69,7 +71,7 @@ def get_head_hunter_vacancy(languages):
         while page < pages:
             payload = {
                 "text": language,
-                "area": 1,
+                "area": moscow_id,
                 "premium": True,
                 "only_with_salary": True,
                 "page": page
