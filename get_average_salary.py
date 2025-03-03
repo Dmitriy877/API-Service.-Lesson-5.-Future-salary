@@ -46,15 +46,15 @@ def predict_rub_salary(salary_from, salary_to):
 def predict_rub_salary_head_hunter(vacancy):
     salary_from = vacancy["salary"]["from"]
     salary_to = vacancy["salary"]["to"]
-    predict_salary = predict_rub_salary(salary_from, salary_to)
-    return predict_salary
+    expected_salary = predict_rub_salary(salary_from, salary_to)
+    return expected_salary
 
 
 def predict_rub_salary_super_job(vacancy):
     salary_from = vacancy["payment_from"]
     salary_to = vacancy["payment_to"]
-    predict_salary = predict_rub_salary(salary_from, salary_to)
-    return predict_salary
+    expected_salary = predict_rub_salary(salary_from, salary_to)
+    return expected_salary
 
 
 def get_head_hunter_vacancy(languages):
