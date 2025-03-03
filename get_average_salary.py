@@ -98,7 +98,7 @@ def get_head_hunter_vacancy(languages):
 
 def get_super_job_vacancy_info(api_key, languages):
     super_job_vacancy = []
-    only_salary = []
+    average_salaries = []
     salary_information_super_job = {}
 
     for language in languages:
@@ -126,11 +126,11 @@ def get_super_job_vacancy_info(api_key, languages):
                 break
 
         for vacancy in super_job_vacancy:
-            only_salary.append(predict_rub_salary_super_job(vacancy))
+            average_salaries.append(predict_rub_salary_super_job(vacancy))
 
         vacancies_found = get_it_vacancy_found_super_job(language, api_key)
-        vacancies_processed = len(only_salary)
-        average_salary = int((sum(only_salary)/len(only_salary)))
+        vacancies_processed = len(average_salaries)
+        average_salary = int((sum(average_salaries)/len(average_salaries)))
         salary_information_super_job.update({language: {
             "vacancy_found": vacancies_found,
             "processed_salary": vacancies_processed,
