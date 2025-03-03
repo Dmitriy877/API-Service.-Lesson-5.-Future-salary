@@ -59,7 +59,7 @@ def predict_rub_salary_super_job(vacancy):
 def get_head_hunter_vacancy(languages):
     it_vacancies = []
     only_salary = []
-    salary_information_head_hunter = {}
+    salary_head_hunter = {}
 
     for language in languages:
         sleep(1)
@@ -88,12 +88,12 @@ def get_head_hunter_vacancy(languages):
         vacancy_found = get_it_vacancy_found_head_hunter(language)
         processed_salary = len(only_salary)
         average_salary = int((sum(only_salary)/len(only_salary)))
-        salary_information_head_hunter.update({language: {
+        salary_head_hunter.update({language: {
             "vacancy_found": vacancy_found,
             "processed_salary": processed_salary,
             "average_salary": average_salary,
             }})
-    return salary_information_head_hunter
+    return salary_head_hunter
 
 
 def get_super_job_vacancy_info(api_key, languages):
