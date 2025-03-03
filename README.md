@@ -33,7 +33,7 @@ pip install -r requerements.txt
 * Перейдите в консоли в папку с скриптом , например:
 
 ```python
-cd C:\Users\Dmitr\Documents\GitHub\API-Service.-Lesson-5.-Future-salary
+cd ./Documents/GitHub/API-Service.-Lesson-5.-Future-salary
 ```
 
 * введите в консоль команду запуска скрипта:
