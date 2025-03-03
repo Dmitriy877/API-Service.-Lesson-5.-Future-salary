@@ -5,35 +5,6 @@ from terminaltables import AsciiTable
 from time import sleep
 
 
-def get_it_vacancy_found_head_hunter(language):
-    moscow_id = 1
-    payload = {
-        "text": language,
-        "area": moscow_id,
-        "premium": True,
-        }
-    url = "https://api.hh.ru/vacancies"
-    response = requests.get(url, params=payload)
-    response.raise_for_status()
-    return response.json()["found"]
-
-
-def get_it_vacancy_found_super_job(language, api_key):
-    headers = {"X-Api-App-Id": api_key}
-    payload_super_job = {
-        "count": 100,
-        "page": 0,
-        "town": "Москва",
-        "keyword": language,
-        "no_agreement": 1
-        }
-    url = "https://api.superjob.ru/2.0/vacancies/"
-    response = requests.get(url, headers=headers, params=payload_super_job)
-    response.raise_for_status()
-    answer = response.json()["total"]
-    return answer
-
-
 def predict_rub_salary(salary_from, salary_to):
     if salary_from and salary_to:
         return (salary_from + salary_to)/2
@@ -79,8 +50,8 @@ def get_head_hunter_vacancy(languages):
             url = "https://api.hh.ru/vacancies"
             response = requests.get(url, params=payload)
             response.raise_for_status()
-            vacancies = response.json()["items"]
-            for vacancy in vacancies:
+            page_answer = response.json()
+            for vacancy in page_answer["items"]:
                 it_vacancies.append(vacancy)
             page += 1
             pages = response.json()["pages"]
@@ -88,7 +59,7 @@ def get_head_hunter_vacancy(languages):
         for vacancy in it_vacancies:
             only_salary.append(predict_rub_salary_head_hunter(vacancy))
 
-        vacancy_found = get_it_vacancy_found_head_hunter(language)
+        vacancy_found = page_answer["found"]
         processed_salary = len(only_salary)
         average_salary = int((sum(only_salary)/len(only_salary)))
         salary_head_hunter.update({language: {
@@ -120,7 +91,8 @@ def get_super_job_vacancy_info(api_key, languages):
             url = "https://api.superjob.ru/2.0/vacancies/"
             response = requests.get(url, headers=headers, params=payload_super_job)
             response.raise_for_status()
-            for vacancy in response.json()["objects"]:
+            page_answer = response.json()
+            for vacancy in page_answer["objects"]:
                 super_job_vacancy.append(vacancy)
             page += 1
             pages += 1
@@ -131,7 +103,7 @@ def get_super_job_vacancy_info(api_key, languages):
         for vacancy in super_job_vacancy:
             average_salaries.append(predict_rub_salary_super_job(vacancy))
 
-        vacancies_found = get_it_vacancy_found_super_job(language, api_key)
+        vacancies_found = page_answer["total"]
         vacancies_processed = len(average_salaries)
         average_salary = int((sum(average_salaries)/len(average_salaries)))
         salary_information_super_job.update({language: {
