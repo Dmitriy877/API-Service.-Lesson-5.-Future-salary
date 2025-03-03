@@ -6,10 +6,11 @@ from time import sleep
 
 
 def get_it_vacancy_found_head_hunter(language):
-    payload = {"text": language,
-               "area": 1,
-               "premium": True,
-               }
+    payload = {
+        "text": language,
+        "area": 1,
+        "premium": True,
+        }
     url = "https://api.hh.ru/vacancies"
     response = requests.get(url, params=payload)
     response.raise_for_status()
@@ -19,12 +20,12 @@ def get_it_vacancy_found_head_hunter(language):
 def get_it_vacancy_found_super_job(language, api_key):
     headers = {"X-Api-App-Id": api_key}
     payload_super_job = {
-                         "count": 100,
-                         "page": 0,
-                         "town": "Москва",
-                         "keyword": language,
-                         "no_agreement": 1
-                         }
+        "count": 100,
+        "page": 0,
+        "town": "Москва",
+        "keyword": language,
+        "no_agreement": 1
+        }
     url = "https://api.superjob.ru/2.0/vacancies/"
     response = requests.get(url, headers=headers, params=payload_super_job)
     response.raise_for_status()
@@ -66,12 +67,13 @@ def get_head_hunter_vacancy_info(languages):
         pages = 1
 
         while page < pages:
-            payload = {"text": language,
-                       "area": 1,
-                       "premium": True,
-                       "only_with_salary": True,
-                       "page": page
-                       }
+            payload = {
+                "text": language,
+                "area": 1,
+                "premium": True,
+                "only_with_salary": True,
+                "page": page
+                }
             url = "https://api.hh.ru/vacancies"
             response = requests.get(url, params=payload)
             response.raise_for_status()
@@ -86,10 +88,11 @@ def get_head_hunter_vacancy_info(languages):
         vacancy_found = get_it_vacancy_found_head_hunter(language)
         processed_salary = len(only_salary)
         average_salary = int((sum(only_salary)/len(only_salary)))
-        salary_information_head_hunter.update({language: {"vacancy_found": vacancy_found,
-                                                          "processed_salary": processed_salary,
-                                                          "average_salary": average_salary,
-                                                          }})
+        salary_information_head_hunter.update({language: {
+            "vacancy_found": vacancy_found,
+            "processed_salary": processed_salary,
+            "average_salary": average_salary,
+            }})
     return salary_information_head_hunter
 
 
@@ -105,12 +108,12 @@ def get_super_job_vacancy_info(api_key, languages):
         while page < pages:
             headers = {"X-Api-App-Id": api_key}
             payload_super_job = {
-                                 "count": 100,
-                                 "page": page,
-                                 "town": "Москва",
-                                 "keyword": language,
-                                 "no_agreement": 1
-                                 }
+                "count": 100,
+                "page": page,
+                "town": "Москва",
+                "keyword": language,
+                "no_agreement": 1
+                }
             url = "https://api.superjob.ru/2.0/vacancies/"
             response = requests.get(url, headers=headers, params=payload_super_job)
             response.raise_for_status()
@@ -128,10 +131,11 @@ def get_super_job_vacancy_info(api_key, languages):
         vacancies_found = get_it_vacancy_found_super_job(language, api_key)
         vacancies_processed = len(only_salary)
         average_salary = int((sum(only_salary)/len(only_salary)))
-        salary_information_super_job.update({language: {"vacancy_found": vacancies_found,
-                                                        "processed_salary": vacancies_processed,
-                                                        "average_salary": average_salary,
-                                                        }})
+        salary_information_super_job.update({language: {
+            "vacancy_found": vacancies_found,
+            "processed_salary": vacancies_processed,
+            "average_salary": average_salary,
+            }})
     return salary_information_super_job
 
 
@@ -169,14 +173,14 @@ def main():
     load_dotenv()
     super_job_api_key = os.environ["SUPER_JOB_SECRET_KEY"]
     languages = [
-                 "GO",
-                 "C++",
-                 "C",
-                 "C#",
-                 "Python"
-                 "Java",
-                 "JavaScript"
-                ]
+        "GO",
+        "C++",
+        "C",
+        "C#",
+        "Python"
+        "Java",
+        "JavaScript"
+        ]
     show_table_salary_statisctis(super_job_api_key, languages)
 
 
