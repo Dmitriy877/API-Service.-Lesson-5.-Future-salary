@@ -56,7 +56,7 @@ def predict_rub_salary_super_job(vacancy):
     return predict_salary
 
 
-def get_head_hunter_vacancy_info(languages):
+def get_head_hunter_vacancy(languages):
     it_vacancies = []
     only_salary = []
     salary_information_head_hunter = {}
@@ -163,7 +163,7 @@ def make_table_salary_statisctis(it_spheres_vacancy, title):
 def show_table_salary_statisctis(api_key, languages):
     title_head_hunter = "HeadHunter Moscow"
     title_super_job = "SuperJob Moscow"
-    head_hunter_it_spheres = get_head_hunter_vacancy_info(languages)
+    head_hunter_it_spheres = get_head_hunter_vacancy(languages)
     super_job_it_spheres = get_super_job_vacancy_info(api_key,
                                                       languages)
     make_table_salary_statisctis(head_hunter_it_spheres,
@@ -185,7 +185,7 @@ def main():
         ]
     title_head_hunter = "HeadHunter Moscow"
     title_super_job = "SuperJob Moscow"
-    head_hunter_vacancy_info = get_head_hunter_vacancy_info(languages)
+    head_hunter_vacancy_info = get_head_hunter_vacancy(languages)
     super_job_vacancy_info = get_super_job_vacancy_info(super_job_api_key,
                                                         languages)
     make_table_salary_statisctis(head_hunter_vacancy_info, title_head_hunter)
