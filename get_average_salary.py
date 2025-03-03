@@ -79,7 +79,8 @@ def get_head_hunter_vacancy(languages):
             url = "https://api.hh.ru/vacancies"
             response = requests.get(url, params=payload)
             response.raise_for_status()
-            for vacancy in response.json()["items"]:
+            vacancies = response.json()["items"]
+            for vacancy in vacancies:
                 it_vacancies.append(vacancy)
             page += 1
             pages = response.json()["pages"]
