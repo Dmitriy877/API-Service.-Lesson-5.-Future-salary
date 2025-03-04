@@ -46,7 +46,8 @@ def get_head_hunter_statistics(languages):
                 "text": language,
                 "area": moscow_id,
                 "premium": True,
-                "page": page
+                "page": page,
+                "only_with_salary": True
             }
             url = "https://api.hh.ru/vacancies"
             response = requests.get(url, params=payload)
@@ -62,7 +63,7 @@ def get_head_hunter_statistics(languages):
 
         vacancy_found = page_answer["found"]
         processed_salary = len(expected_salaries)
-        if processed_salary > 0:
+        if processed_salary:
             average_salary = int((sum(expected_salaries)/len(expected_salaries)))
         else:
             average_salary = "Недостаточно вакансий для расчета"
@@ -90,6 +91,7 @@ def get_super_job_statistics(api_key, languages):
                 "page": page,
                 "town": "Москва",
                 "keyword": language,
+                "no_agreement": 1
             }
             url = "https://api.superjob.ru/2.0/vacancies/"
             response = requests.get(url, headers=headers, params=payload_super_job)
@@ -108,7 +110,7 @@ def get_super_job_statistics(api_key, languages):
 
         vacancies_found = page_answer["total"]
         processed_salary = len(expected_salaries)
-        if processed_salary > 0:
+        if processed_salary:
             average_salary = int((sum(expected_salaries)/len(expected_salaries)))
         else:
             average_salary = "Недостаточно вакансий для расчета"
@@ -145,19 +147,13 @@ def main():
     load_dotenv()
     super_job_api_key = os.environ["SUPER_JOB_SECRET_KEY"]
     languages = [
-        "GO",
-        "C++",
-        "C",
-        "C#",
-        "Python"
-        "Java",
-        "JavaScript"
+        "GO"
     ]
     title_head_hunter = "HeadHunter Moscow"
     title_super_job = "SuperJob Moscow"
-    head_hunter_vacancy = get_head_hunter_vacancy(languages)
-    super_job_vacancy = get_super_job_vacancy_info(super_job_api_key,
-                                                   languages)
+    head_hunter_vacancy = get_head_hunter_statistics(languages)
+    super_job_vacancy = get_super_job_statistics(super_job_api_key,
+                                                 languages)
     print(make_table_salary_statisctis(head_hunter_vacancy, title_head_hunter))
     print(make_table_salary_statisctis(super_job_vacancy, title_super_job))
 
