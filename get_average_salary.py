@@ -99,11 +99,12 @@ def get_super_job_statistics(api_key, languages):
             page_answer = response.json()
             for vacancy in page_answer["objects"]:
                 super_job_vacancies.append(vacancy)
-            page += 1
-            pages += 1
-            sleep(1)
-            if not page_answer["more"]:
+            if page_answer["more"]:
+                page += 1
+                pages += 1
+            else:
                 break
+            sleep(1)
 
         for vacancy in super_job_vacancies:
             expected_salaries.append(predict_rub_salary_super_job(vacancy))
