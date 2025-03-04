@@ -12,6 +12,8 @@ def predict_rub_salary(salary_from, salary_to):
         return salary_to*0.8
     if salary_from and not salary_to:
         return salary_from*1.2
+    if not salary_from and not salary_to:
+        return None
 
 
 def predict_rub_salary_head_hunter(vacancy):
@@ -28,7 +30,7 @@ def predict_rub_salary_super_job(vacancy):
     return expected_salary
 
 
-def get_head_hunter_vacancy(languages):
+def get_head_hunter_statistics(languages):
     it_vacancies = []
     expected_salaries = []
     salary_head_hunter = {}
@@ -44,7 +46,6 @@ def get_head_hunter_vacancy(languages):
                 "text": language,
                 "area": moscow_id,
                 "premium": True,
-                "only_with_salary": True,
                 "page": page
             }
             url = "https://api.hh.ru/vacancies"
@@ -73,7 +74,7 @@ def get_head_hunter_vacancy(languages):
     return salary_head_hunter
 
 
-def get_super_job_vacancy_info(api_key, languages):
+def get_super_job_statistics(api_key, languages):
     super_job_vacancy = []
     expected_salaries = []
     salary_information_super_job = {}
@@ -89,7 +90,6 @@ def get_super_job_vacancy_info(api_key, languages):
                 "page": page,
                 "town": "Москва",
                 "keyword": language,
-                "no_agreement": 1
             }
             url = "https://api.superjob.ru/2.0/vacancies/"
             response = requests.get(url, headers=headers, params=payload_super_job)
