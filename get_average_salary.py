@@ -55,7 +55,7 @@ def get_head_hunter_statistics(languages):
             for vacancy in page_answer["items"]:
                 it_vacancies.append(vacancy)
             page += 1
-            pages = response.json()["pages"]
+            pages = page_answer["pages"]
             sleep(1)
         for vacancy in it_vacancies:
             expected_salaries.append(predict_rub_salary_head_hunter(vacancy))
@@ -100,7 +100,7 @@ def get_super_job_statistics(api_key, languages):
             page += 1
             pages += 1
             sleep(1)
-            if not response.json()["more"]:
+            if not page_answer["more"]:
                 break
 
         for vacancy in super_job_vacancy:
