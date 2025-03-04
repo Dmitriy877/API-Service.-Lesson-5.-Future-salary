@@ -46,7 +46,7 @@ def get_head_hunter_vacancy(languages):
                 "premium": True,
                 "only_with_salary": True,
                 "page": page
-                }
+            }
             url = "https://api.hh.ru/vacancies"
             response = requests.get(url, params=payload)
             response.raise_for_status()
@@ -69,7 +69,7 @@ def get_head_hunter_vacancy(languages):
             "vacancy_found": vacancy_found,
             "processed_salary": processed_salary,
             "average_salary": average_salary,
-            }
+        }
     return salary_head_hunter
 
 
@@ -90,7 +90,7 @@ def get_super_job_vacancy_info(api_key, languages):
                 "town": "Москва",
                 "keyword": language,
                 "no_agreement": 1
-                }
+            }
             url = "https://api.superjob.ru/2.0/vacancies/"
             response = requests.get(url, headers=headers, params=payload_super_job)
             response.raise_for_status()
@@ -130,11 +130,12 @@ def make_table_salary_statisctis(it_spheres_vacancy, title):
           ]
     ]
     for it_sphere in it_spheres_vacancy:
-        table_data.append([it_sphere,
+        table_data.append([
+                           it_sphere,
                            it_spheres_vacancy[it_sphere]["vacancy_found"],
                            it_spheres_vacancy[it_sphere]["processed_salary"],
                            it_spheres_vacancy[it_sphere]["average_salary"]
-                           ])
+        ])
     table_instance = AsciiTable(table_data, title)
     table_instance.justify_columns[2] = 'right'
     return table_instance.table
@@ -151,7 +152,7 @@ def main():
         "Python"
         "Java",
         "JavaScript"
-        ]
+    ]
     title_head_hunter = "HeadHunter Moscow"
     title_super_job = "SuperJob Moscow"
     head_hunter_vacancy = get_head_hunter_vacancy(languages)
