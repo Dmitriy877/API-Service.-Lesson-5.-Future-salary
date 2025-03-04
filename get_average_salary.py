@@ -76,7 +76,7 @@ def get_head_hunter_statistics(languages):
 
 
 def get_super_job_statistics(api_key, languages):
-    super_job_vacancy = []
+    super_job_vacancies = []
     expected_salaries = []
     salary_information_super_job = {}
 
@@ -98,14 +98,14 @@ def get_super_job_statistics(api_key, languages):
             response.raise_for_status()
             page_answer = response.json()
             for vacancy in page_answer["objects"]:
-                super_job_vacancy.append(vacancy)
+                super_job_vacancies.append(vacancy)
             page += 1
             pages += 1
             sleep(1)
             if not page_answer["more"]:
                 break
 
-        for vacancy in super_job_vacancy:
+        for vacancy in super_job_vacancies:
             expected_salaries.append(predict_rub_salary_super_job(vacancy))
 
         vacancies_found = page_answer["total"]
