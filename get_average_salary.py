@@ -46,15 +46,15 @@ def get_head_hunter_statistics(languages):
                 "text": language,
                 "area": moscow_id,
                 "premium": True,
-                "page": page,
-                "only_with_salary": True
+                "page": page
             }
             url = "https://api.hh.ru/vacancies"
             response = requests.get(url, params=payload)
             response.raise_for_status()
             page_answer = response.json()
             for vacancy in page_answer["items"]:
-                it_vacancies.append(vacancy)
+                if vacancy["salary"]:
+                    it_vacancies.append(vacancy)
             page += 1
             pages = page_answer["pages"]
             sleep(1)
@@ -91,7 +91,6 @@ def get_super_job_statistics(api_key, languages):
                 "page": page,
                 "town": "Москва",
                 "keyword": language,
-                "no_agreement": 1
             }
             url = "https://api.superjob.ru/2.0/vacancies/"
             response = requests.get(url, headers=headers, params=payload_super_job)
@@ -105,10 +104,9 @@ def get_super_job_statistics(api_key, languages):
             else:
                 break
             sleep(1)
-
         for vacancy in super_job_vacancies:
-            expected_salaries.append(predict_rub_salary_super_job(vacancy))
-
+            if not vacancy["agreement"]:
+                expected_salaries.append(predict_rub_salary_super_job(vacancy))
         vacancies_found = page_answer["total"]
         processed_salary = len(expected_salaries)
         if processed_salary:
@@ -152,10 +150,10 @@ def main():
     ]
     title_head_hunter = "HeadHunter Moscow"
     title_super_job = "SuperJob Moscow"
-    head_hunter_vacancy = get_head_hunter_statistics(languages)
+    # head_hunter_vacancy = get_head_hunter_statistics(languages)
     super_job_vacancy = get_super_job_statistics(super_job_api_key,
                                                  languages)
-    print(make_table_salary_statisctis(head_hunter_vacancy, title_head_hunter))
+    # print(make_table_salary_statisctis(head_hunter_vacancy, title_head_hunter))
     print(make_table_salary_statisctis(super_job_vacancy, title_super_job))
 
 
