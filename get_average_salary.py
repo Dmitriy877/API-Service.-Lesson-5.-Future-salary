@@ -77,7 +77,7 @@ def get_head_hunter_statistics(languages):
 def get_super_job_statistics(api_key, languages):
     super_job_vacancies = []
     expected_salaries = []
-    salary_information_super_job = {}
+    salary_super_job = {}
 
     for language in languages:
         sleep(1)
@@ -111,12 +111,12 @@ def get_super_job_statistics(api_key, languages):
             average_salary = int((sum(expected_salaries)/len(expected_salaries)))
         else:
             average_salary = "Недостаточно вакансий для расчета"
-        salary_information_super_job[language] = {
+        salary_super_job[language] = {
             "vacancy_found": vacancies_found,
             "processed_salary": processed_salary,
             "average_salary": average_salary,
             }
-    return salary_information_super_job
+    return salary_super_job
 
 
 def make_table_salary_statisctis(it_spheres_vacancy, title):
