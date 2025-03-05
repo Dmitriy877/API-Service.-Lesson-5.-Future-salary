@@ -148,11 +148,11 @@ def main():
     ]
     title_head_hunter = "HeadHunter Moscow"
     title_super_job = "SuperJob Moscow"
-    head_hunter_vacancy = get_head_hunter_statistics(languages)
-    super_job_vacancy = get_super_job_statistics(super_job_api_key,
-                                                 languages)
-    print(make_table_salary_statisctis(head_hunter_vacancy, title_head_hunter))
-    print(make_table_salary_statisctis(super_job_vacancy, title_super_job))
+    head_hunter_statistics = get_head_hunter_statistics(languages)
+    super_job_statistics = get_super_job_statistics(super_job_api_key,
+                                                    languages)
+    print(make_table_salary_statisctis(head_hunter_statistics, title_head_hunter))
+    print(make_table_salary_statisctis(super_job_statistics, title_super_job))
 
 
 if __name__ == "__main__":
