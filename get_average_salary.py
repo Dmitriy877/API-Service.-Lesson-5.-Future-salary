@@ -96,10 +96,9 @@ def get_super_job_statistics(api_key, languages):
             response.raise_for_status()
             page_answer = response.json()
             super_job_vacancies.extend(page_answer["objects"])
-            if page_answer["more"]:
-                page += 1
-                pages += 1
-            else:
+            page += 1
+            pages += 1
+            if not page_answer["more"]:
                 break
             sleep(1)
         for vacancy in super_job_vacancies:
@@ -128,12 +127,12 @@ def make_table_salary_statisctis(it_spheres_vacancy, title):
            "Средняя зарплата"
           ]
     ]
-    for it_sphere in it_spheres_vacancy:
+    for it_sphere, statistics in it_spheres_vacancy.items():
         table_data.append([
                            it_sphere,
-                           it_spheres_vacancy[it_sphere]["vacancy_found"],
-                           it_spheres_vacancy[it_sphere]["processed_salary"],
-                           it_spheres_vacancy[it_sphere]["average_salary"]
+                           statistics["vacancy_found"],
+                           statistics["processed_salary"],
+                           statistics["average_salary"]
         ])
     table_instance = AsciiTable(table_data, title)
     table_instance.justify_columns[2] = 'right'
@@ -144,7 +143,13 @@ def main():
     load_dotenv()
     super_job_api_key = os.environ["SUPER_JOB_SECRET_KEY"]
     languages = [
-        "GO"
+        "GO",
+        "C++",
+        "C",
+        "C#",
+        "Python"
+        "Java",
+        "JavaScript"
     ]
     title_head_hunter = "HeadHunter Moscow"
     title_super_job = "SuperJob Moscow"
