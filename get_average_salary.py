@@ -82,8 +82,7 @@ def get_super_job_statistics(api_key, languages):
     for language in languages:
         sleep(1)
         page = 0
-        pages = 1
-        while page < pages:
+        while (True):
             headers = {"X-Api-App-Id": api_key}
             payload_super_job = {
                 "count": 100,
@@ -97,7 +96,6 @@ def get_super_job_statistics(api_key, languages):
             page_answer = response.json()
             super_job_vacancies.extend(page_answer["objects"])
             page += 1
-            pages += 1
             if not page_answer["more"]:
                 break
             sleep(1)
@@ -114,7 +112,7 @@ def get_super_job_statistics(api_key, languages):
             "vacancy_found": vacancies_found,
             "processed_salary": processed_salary,
             "average_salary": average_salary,
-            }
+        }
     return salary_super_job
 
 
@@ -129,10 +127,10 @@ def make_table_salary_statisctis(it_spheres_vacancy, title):
     ]
     for it_sphere, statistics in it_spheres_vacancy.items():
         table_data.append([
-                           it_sphere,
-                           statistics["vacancy_found"],
-                           statistics["processed_salary"],
-                           statistics["average_salary"]
+            it_sphere,
+            statistics["vacancy_found"],
+            statistics["processed_salary"],
+            statistics["average_salary"]
         ])
     table_instance = AsciiTable(table_data, title)
     table_instance.justify_columns[2] = 'right'
